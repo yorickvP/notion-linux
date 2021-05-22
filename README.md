@@ -35,6 +35,11 @@ sudo zypper --gpg-auto-import-keys install notion-desktop
 
 ## Build
 
+### Nix
+```sh
+./scripts/build-nix.sh
+```
+
 ### Install requirements
 
 1. Install Node.js, e.g. using [NVM](https://github.com/nvm-sh/nvm):
