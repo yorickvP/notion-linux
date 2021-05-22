@@ -58,14 +58,18 @@ if ! [ -f "$RESOURCE_DIR/notion-exe/\$PLUGINSDIR/app-64.7z" ]; then
 fi
 
 # Extract the app bundle
-if ! [ -f "$RESOURCE_DIR/app-bundle/resources/app.asar" ]; then
+if ! [ -d "$RESOURCE_DIR/app-bundle/resources/app" ]; then
   7z x "$RESOURCE_DIR/notion-exe/\$PLUGINSDIR/app-64.7z" -o"$RESOURCE_DIR/app-bundle"
 fi
 
 # Extract the app container
 if ! [ -d "$BUILD_DIR/app-unpacked" ]; then
-  asar extract \
-    "$RESOURCE_DIR/app-bundle/resources/app.asar" "$BUILD_DIR/app-unpacked"
+    if [ -d "$RESOURCE_DIR/app-bundle/resources/app" ]; then
+        cp -r "$RESOURCE_DIR/app-bundle/resources/app" "$BUILD_DIR/app-unpacked"
+    else
+        asar extract \
+"$RESOURCE_DIR/app-bundle/resources/app.asar" "$BUILD_DIR/app-unpacked"
+    fi
 fi
 
 # Install NPM dependencies and apply patches
@@ -89,7 +93,7 @@ if ! [ -f "$BUILD_DIR/app-unpacked/package-lock.json" ]; then
   export npm_config_runtime=electron
   export npm_config_build_from_source=true
 
-  HOME=~/.electron-gyp npm install --prefix "$BUILD_DIR/app-unpacked" open
+  HOME=~/.electron-gyp npm install --prefix "$BUILD_DIR/app-unpacked"
 fi
 
 # Convert icon.ico to PNG
