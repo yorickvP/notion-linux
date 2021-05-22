@@ -1,0 +1,11 @@
+diff -ru app/main/main.js app2/main/main.js
+--- a/app/main/main.js	2021-05-22 12:19:42.707920932 +0200
++++ b/app/main/main.js	2021-05-22 12:19:35.236913567 +0200
+@@ -102,6 +102,7 @@
+     schemeHandler_1.registerUrlSchemeProxy();
+     handleActivate(relativeUrl);
+ }
++electron_1.app.allowRendererProcessReuse = false;
+ electron_1.app.on("ready", handleReady);
+ electron_1.app.setAppUserModelId(config_1.default.desktopAppId);
+ electron_1.app.setAsDefaultProtocolClient(config_1.default.protocol);
